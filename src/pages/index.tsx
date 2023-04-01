@@ -51,6 +51,17 @@ Font.register({
   ],
 });
 
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+};
+
 const MyDocument = ({ data }: { data: FormData }) => (
   <Document>
     <Page
@@ -107,7 +118,7 @@ const MyDocument = ({ data }: { data: FormData }) => (
               {data.subhead}
             </Text>
             <Text style={{ textTransform: "uppercase", color: "#8A8B8A" }}>
-              Delivery: {data.delivery}
+              Delivery: {formatDate(data.delivery)}
             </Text>
             <Text style={{ textTransform: "uppercase", color: "#8A8B8A" }}>
               Subject: {data.subject}
@@ -663,7 +674,7 @@ export default function PdfCreator() {
       <div>
         <label>Delivery:</label>
         <input
-          type="text"
+          type="date"
           value={formData.delivery}
           onChange={(e) =>
             setFormData({ ...formData, delivery: e.target.value })
