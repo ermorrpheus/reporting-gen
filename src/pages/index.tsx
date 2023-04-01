@@ -12,6 +12,7 @@ import {
   Svg,
   G,
   Rect,
+  Line,
 } from "@react-pdf/renderer";
 
 type FormData = {
@@ -23,7 +24,11 @@ type FormData = {
   opens: string;
   clicks: string;
   openRate: string;
+  openPctDesktop: string;
+  openPctMobile: string;
   clickRate: string;
+  clickPctDesktop: string;
+  clickPctMobile: string;
   averageOpenRate: string;
   averageClickRate: string;
 };
@@ -304,19 +309,130 @@ const MyDocument = ({ data }: { data: FormData }) => (
               flex: 1,
               display: "flex",
               flexDirection: "column",
+              padding: 12,
             }}
           >
             <Text
               style={{
-                fontWeight: "bold",
-                fontSize: 8,
-                paddingTop: 6,
-                paddingBottom: 8,
-                paddingLeft: 6,
+                fontSize: 12,
+                textAlign: "center",
               }}
             >
               {data.opens} Opens
             </Text>
+            <Svg viewBox="0 0 210 130">
+              <G>
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="10"
+                  y2="10"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="-1" y="12" style={{ fill: "#efefef", fontSize: 6 }}>
+                  100
+                </Text>
+              </G>
+              <G>
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="35"
+                  y2="35"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="2" y="37" style={{ fill: "#efefef", fontSize: 6 }}>
+                  75
+                </Text>
+              </G>
+              <G>
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="60"
+                  y2="60"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+              </G>
+              <Text x="2" y="62" style={{ fill: "#efefef", fontSize: 6 }}>
+                50
+              </Text>
+              <G>
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="85"
+                  y2="85"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="2" y="87" style={{ fill: "#efefef", fontSize: 6 }}>
+                  25
+                </Text>
+              </G>
+              <G>
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="110"
+                  y2="110"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="5" y="112" style={{ fill: "#efefef", fontSize: 6 }}>
+                  0
+                </Text>
+              </G>
+              <G>
+                <Text
+                  x="63"
+                  y={105 - parseInt(data.openPctDesktop)}
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >{`${parseInt(data.openPctDesktop).toFixed(0)}%`}</Text>
+                <Text
+                  x="142"
+                  y={105 - parseInt(data.openPctMobile)}
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >{`${parseInt(data.openPctMobile).toFixed(0)}%`}</Text>
+              </G>
+              <G>
+                <Rect
+                  width="40"
+                  height={parseInt(data.openPctDesktop)}
+                  y={110 - parseInt(data.openPctDesktop)}
+                  x="50"
+                  fill="#7CB3CA"
+                />
+              </G>
+              <G>
+                <Rect
+                  width="40"
+                  height={parseInt(data.openPctMobile)}
+                  y={110 - parseInt(data.openPctMobile)}
+                  x="130"
+                  fill="#7CB3CA"
+                />
+              </G>
+              <G>
+                <Text
+                  x="55"
+                  y="125"
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >
+                  Desktop
+                </Text>
+                <Text
+                  x="138"
+                  y="125"
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >
+                  Mobile
+                </Text>
+              </G>
+            </Svg>
           </View>
           <View
             style={{
@@ -326,33 +442,128 @@ const MyDocument = ({ data }: { data: FormData }) => (
               flex: 1,
               display: "flex",
               flexDirection: "column",
-			  padding: 12
+              padding: 12,
             }}
           >
             <Text
               style={{
-                
                 fontSize: 12,
-                textAlign: 'center'
+                textAlign: "center",
               }}
             >
               {data.clicks} Clicks
             </Text>
-            <Svg viewBox="0 0 220 100">
+            <Svg viewBox="0 0 210 130">
               <G>
-                <Rect width="40" height="19" y="0" x="0" fill="#7CB3CA" />
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="10"
+                  y2="10"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="-1" y="12" style={{ fill: "#efefef", fontSize: 6 }}>
+                  100
+                </Text>
               </G>
               <G>
-                <Rect width="80" height="19" y="20" x="0" fill="#7CB3CA" />
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="35"
+                  y2="35"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="2" y="37" style={{ fill: "#efefef", fontSize: 6 }}>
+                  75
+                </Text>
               </G>
               <G>
-                <Rect width="150" height="19" y="40" x="0" fill="#7CB3CA" />
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="60"
+                  y2="60"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+              </G>
+              <Text x="2" y="62" style={{ fill: "#efefef", fontSize: 6 }}>
+                50
+              </Text>
+              <G>
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="85"
+                  y2="85"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="2" y="87" style={{ fill: "#efefef", fontSize: 6 }}>
+                  25
+                </Text>
               </G>
               <G>
-                <Rect width="160" height="19" y="60" x="0" fill="#7CB3CA" />
+                <Line
+                  x1="10"
+                  x2="210"
+                  y1="110"
+                  y2="110"
+                  strokeWidth={1}
+                  stroke="#efefef"
+                />
+                <Text x="5" y="112" style={{ fill: "#efefef", fontSize: 6 }}>
+                  0
+                </Text>
               </G>
               <G>
-                <Rect width="230" height="19" y="80" x="0" fill="#7CB3CA" />
+                <Text
+                  x="63"
+                  y={105 - parseInt(data.clickPctDesktop)}
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >{`${parseInt(data.clickPctDesktop).toFixed(0)}%`}</Text>
+                <Text
+                  x="142"
+                  y={105 - parseInt(data.clickPctMobile)}
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >{`${parseInt(data.clickPctMobile).toFixed(0)}%`}</Text>
+              </G>
+              <G>
+                <Rect
+                  width="40"
+                  height={parseInt(data.clickPctDesktop)}
+                  y={110 - parseInt(data.clickPctDesktop)}
+                  x="50"
+                  fill="#7CB3CA"
+                />
+              </G>
+              <G>
+                <Rect
+                  width="40"
+                  height={parseInt(data.clickPctMobile)}
+                  y={110 - parseInt(data.clickPctMobile)}
+                  x="130"
+                  fill="#7CB3CA"
+                />
+              </G>
+              <G>
+                <Text
+                  x="55"
+                  y="125"
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >
+                  Desktop
+                </Text>
+                <Text
+                  x="138"
+                  y="125"
+                  style={{ fontSize: 8, fontFamily: "AvenirNext" }}
+                >
+                  Mobile
+                </Text>
               </G>
             </Svg>
           </View>
@@ -400,7 +611,11 @@ export default function PdfCreator() {
     opens: "",
     clicks: "",
     openRate: "",
+    openPctDesktop: "",
+    openPctMobile: "",
     clickRate: "",
+    clickPctDesktop: "",
+    clickPctMobile: "",
     averageOpenRate: "",
     averageClickRate: "",
   });
@@ -473,7 +688,7 @@ export default function PdfCreator() {
           onChange={(e) => setFormData({ ...formData, sent: e.target.value })}
         />
       </div>
-	  <div>
+      <div>
         <label>Opens:</label>
         <input
           type="text"
@@ -481,7 +696,7 @@ export default function PdfCreator() {
           onChange={(e) => setFormData({ ...formData, opens: e.target.value })}
         />
       </div>
-	  <div>
+      <div>
         <label>Clicks:</label>
         <input
           type="text"
@@ -526,6 +741,46 @@ export default function PdfCreator() {
           value={formData.averageClickRate}
           onChange={(e) =>
             setFormData({ ...formData, averageClickRate: e.target.value })
+          }
+        />
+      </div>
+      <div>
+        <label>Opens Desktop:</label>
+        <input
+          type="text"
+          value={formData.openPctDesktop}
+          onChange={(e) =>
+            setFormData({ ...formData, openPctDesktop: e.target.value })
+          }
+        />
+      </div>
+      <div>
+        <label>Opens Mobile:</label>
+        <input
+          type="text"
+          value={formData.openPctMobile}
+          onChange={(e) =>
+            setFormData({ ...formData, openPctMobile: e.target.value })
+          }
+        />
+      </div>
+      <div>
+        <label>Click Desktop:</label>
+        <input
+          type="text"
+          value={formData.clickPctDesktop}
+          onChange={(e) =>
+            setFormData({ ...formData, clickPctDesktop: e.target.value })
+          }
+        />
+      </div>
+      <div>
+        <label>Click Mobile:</label>
+        <input
+          type="text"
+          value={formData.clickPctMobile}
+          onChange={(e) =>
+            setFormData({ ...formData, clickPctMobile: e.target.value })
           }
         />
       </div>
