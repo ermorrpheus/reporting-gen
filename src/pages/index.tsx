@@ -225,7 +225,12 @@ export default function PdfCreator() {
           }
         />
       </div>
-      <button onClick={handleClick}>Create PDF</button>
+      <button
+        className="bg-slate-700 px-4 py-2 text-white max-w-fit hover:bg-slate-900"
+        onClick={handleClick}
+      >
+        Create PDF
+      </button>
     </div>
   );
 }
