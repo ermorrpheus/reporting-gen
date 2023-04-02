@@ -72,20 +72,9 @@ export default function PdfCreator() {
   };
 
   return (
-    <div
-      style={{
-        padding: 24,
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: 600,
-        alignItems: "center",
-        justifyContent: "center",
-        margin: "0 auto",
-        gap: 24,
-      }}
-    >
+    <div className="flex flex-col max-w-xl mx-auto gap-6 p-6">
       <div>
-        <label>Business Name:</label>
+        <label className="">Business Name:</label>
         <input
           type="text"
           value={formData.businessName}
