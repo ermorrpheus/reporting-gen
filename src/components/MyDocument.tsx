@@ -10,9 +10,8 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { formatDate } from "@/utils/formatDate";
-import { formatTime } from "@/utils/formatTime";
-import { FormData } from "../pages/index";
+import { formatDate, formatTime, convertToJSON } from "@/lib/utils";
+import { FormData } from "@/lib/types";
 
 export const MyDocument = ({ data }: { data: FormData }) => (
   <Document>
@@ -67,7 +66,7 @@ export const MyDocument = ({ data }: { data: FormData }) => (
               {data.businessName}
             </Text>
             <Text style={{ textTransform: "uppercase", color: "#8A8B8A" }}>
-              {data.subhead}
+              {data.campaignName}
             </Text>
             <Text style={{ textTransform: "uppercase", color: "#8A8B8A" }}>
               Delivery: {formatDate(data.delivery)} at {formatTime(data.time)}
@@ -568,7 +567,7 @@ export const MyDocument = ({ data }: { data: FormData }) => (
             Click Performance
           </Text>
           <Text style={{ fontSize: 10, paddingLeft: 6 }}>
-            Name 1 Name 2 Name 3 Name 4 Name 5 Name 6 Name 7
+            <pre>{JSON.stringify(data.clickPerformance)}</pre>
           </Text>
         </View>
       </View>
