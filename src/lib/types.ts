@@ -15,7 +15,7 @@ export type FormData = {
   clickPctMobile: string;
   averageOpenRate: string;
   averageClickRate: string;
-  clickPerformance: string;
+  clickPerformance: ClickData[];
 };
 
 export type ClickData = {

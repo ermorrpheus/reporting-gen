@@ -24,14 +24,15 @@ export const formatTime = (time: string): string => {
   });
 };
 
-export const convertToJSON = (inputData: string): ClickData[] => {
-  const lines = inputData.trim().split("\n");
-  return lines.map((line) => {
-    const [url, clicks, percentage] = line.trim().split("\t");
+export const convertToJSON = (inputString: string): ClickData[] => {
+  const lines = inputString.trim().split(/\r?\n/);
+  const result = lines.map((line) => {
+    const [url, clicks, percentage] = line.trim().split(/\s+/);
     return {
       url,
       clicks: parseInt(clicks),
       percentage,
     };
   });
+  return result;
 };

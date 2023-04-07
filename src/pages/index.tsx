@@ -3,7 +3,8 @@ import { Font, pdf, PDFViewer } from "@react-pdf/renderer";
 import { useState } from "react";
 
 import { MyDocument } from "../components/MyDocument";
-import { FormData } from "@/lib/types";
+import { ClickData, FormData } from "@/lib/types";
+import { convertToJSON } from "@/lib/utils";
 
 Font.register({
   family: "AvenirNext",
@@ -41,17 +42,25 @@ export default function PdfCreator() {
     clickPctMobile: "",
     averageOpenRate: "",
     averageClickRate: "",
-    clickPerformance: "",
+    clickPerformance: [],
   });
+  const [rawClickPerformance, setRawClickPerformance] = useState<string>("");
 
   const handleClick = async () => {
-    const newPDF = await pdf(<MyDocument data={formData} />);
+    const mutatedFormData = {
+      ...formData,
+      clickPerformance: convertToJSON(rawClickPerformance) as ClickData[],
+    };
+    const newPDF = await pdf(<MyDocument data={mutatedFormData} />);
     const blob = await newPDF.toBlob();
     const url = URL.createObjectURL(blob);
-    {
-      console.log(formData.time);
-    }
+    console.log(mutatedFormData);
     window.open(url, "_blank");
+  };
+
+  const handleClickPerformance = (e: { target: { value: any } }) => {
+    const input = e.target.value;
+    setRawClickPerformance(input);
   };
 
   return (
@@ -278,58 +287,93 @@ export default function PdfCreator() {
           className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
         >
           <span className="text-xs font-medium text-gray-700">
-            Click Rate - Industry Average
+            Click Performance
           </span>
-          <input
-            type="text"
+          <textarea
             id="clickPerformance"
             placeholder=""
             className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-            value={formData.clickPerformance}
-            onChange={(e) =>
-              setFormData({ ...formData, clickPerformance: e.target.value })
-            }
+            value={rawClickPerformance}
+            onChange={handleClickPerformance}
           />
         </label>
-        <div>
-          <label>Opens Desktop:</label>
-          <input
-            type="text"
-            value={formData.openPctDesktop}
-            onChange={(e) =>
-              setFormData({ ...formData, openPctDesktop: e.target.value })
-            }
-          />
+        <h2 className="text-xl mt-8">Email Information</h2>
+        <hr />
+        <div className="grid grid-cols-2 gap-6">
+          <label
+            htmlFor="openPctDesktop"
+            className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+          >
+            <span className="text-xs font-medium text-gray-700">
+              Desktop Open Rate
+            </span>
+            <input
+              type="text"
+              id="openPctDesktop"
+              placeholder="Ex. 18.7"
+              className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              value={formData.openPctDesktop}
+              onChange={(e) =>
+                setFormData({ ...formData, openPctDesktop: e.target.value })
+              }
+            />
+          </label>
+          <label
+            htmlFor="openPctMobile"
+            className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+          >
+            <span className="text-xs font-medium text-gray-700">
+              Mobile Open Rate
+            </span>
+            <input
+              type="text"
+              id="openPctMobile"
+              placeholder="Ex. 3.1"
+              className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              value={formData.openPctMobile}
+              onChange={(e) =>
+                setFormData({ ...formData, openPctMobile: e.target.value })
+              }
+            />
+          </label>
         </div>
-        <div>
-          <label>Opens Mobile:</label>
-          <input
-            type="text"
-            value={formData.openPctMobile}
-            onChange={(e) =>
-              setFormData({ ...formData, openPctMobile: e.target.value })
-            }
-          />
-        </div>
-        <div>
-          <label>Click Desktop:</label>
-          <input
-            type="text"
-            value={formData.clickPctDesktop}
-            onChange={(e) =>
-              setFormData({ ...formData, clickPctDesktop: e.target.value })
-            }
-          />
-        </div>
-        <div>
-          <label>Click Mobile:</label>
-          <input
-            type="text"
-            value={formData.clickPctMobile}
-            onChange={(e) =>
-              setFormData({ ...formData, clickPctMobile: e.target.value })
-            }
-          />
+        <div className="grid grid-cols-2 gap-6">
+          <label
+            htmlFor="clickPctDesktop"
+            className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+          >
+            <span className="text-xs font-medium text-gray-700">
+              Desktop Click Rate
+            </span>
+            <input
+              type="text"
+              id="clickPctDesktop"
+              placeholder="Ex. 18.7"
+              className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              value={formData.clickPctDesktop}
+              onChange={(e) =>
+                setFormData({ ...formData, clickPctDesktop: e.target.value })
+              }
+            />
+          </label>
+          <label
+            htmlFor="clickPctMobile"
+            className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+          >
+            <span className="text-xs font-medium text-gray-700">
+              Mobile Click Rate
+            </span>
+            <input
+              type="text"
+              id="clickPctMobile"
+              placeholder="Ex. 3.1"
+              className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+              value={formData.clickPctMobile}
+              onChange={(e) =>
+                setFormData({ ...formData, clickPctMobile: e.target.value })
+              }
+            />
+          </label>
         </div>
         <button
           className="bg-slate-700 px-4 py-2 text-white max-w-fit hover:bg-slate-900 self-center"

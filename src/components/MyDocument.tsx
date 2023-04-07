@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { formatDate, formatTime, convertToJSON } from "@/lib/utils";
+import { formatDate, formatTime } from "@/lib/utils";
 import { FormData } from "@/lib/types";
 
 export const MyDocument = ({ data }: { data: FormData }) => (
@@ -566,9 +566,44 @@ export const MyDocument = ({ data }: { data: FormData }) => (
           >
             Click Performance
           </Text>
-          <Text style={{ fontSize: 10, paddingLeft: 6 }}>
-            <pre>{JSON.stringify(data.clickPerformance)}</pre>
-          </Text>
+          <View
+            style={{
+              fontSize: 10,
+              paddingLeft: 6,
+            }}
+          >
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 30,
+                width: "100%",
+              }}
+            >
+              <Text style={{ width: "70%" }}>URL</Text>
+              <Text style={{ width: "10%", textAlign: "right" }}>Clicks</Text>
+              <Text style={{ width: "10%", textAlign: "right" }}>%</Text>
+            </View>
+            {data.clickPerformance.map((row, i) => (
+              <View
+                key={i}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 30,
+                  width: "100%",
+                }}
+              >
+                <Text style={{ width: "70%" }}>{row.url}</Text>
+                <Text style={{ width: "10%", textAlign: "right" }}>
+                  {row.clicks}
+                </Text>
+                <Text style={{ width: "10%", textAlign: "right" }}>
+                  {row.percentage}
+                </Text>
+              </View>
+            ))}
+          </View>
         </View>
       </View>
       <View
