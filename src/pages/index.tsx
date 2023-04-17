@@ -340,7 +340,7 @@ export default function PdfCreator() {
             onChange={handleFileChange}
           />
         </label>
-        <h2 className="text-xl mt-8">Email Information</h2>
+        <h2 className="text-xl mt-8">Reporting</h2>
         <hr />
         <div className="grid grid-cols-2 gap-6">
           <label
@@ -426,6 +426,8 @@ export default function PdfCreator() {
             />
           </label>
         </div>
+        <h2 className="text-xl mt-8">Reporting Details</h2>
+        <hr />
         <button
           className="bg-slate-700 px-4 py-2 text-white max-w-fit hover:bg-slate-900 self-center"
           onClick={handleClick}

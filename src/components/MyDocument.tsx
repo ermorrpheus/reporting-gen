@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
-import { formatDate, formatTime } from "@/lib/utils";
 import { FormData } from "@/lib/types";
 import OpenSVG from "@/components/OpenSVG";
 import CloseSVG from "@/components/CloseSVG";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ClickPerformanceTable from "./ClickPerformanceTable";
+import ClickPerformanceTable from "@/components/ClickPerformanceTable";
 
 export const MyDocument = ({ data }: { data: FormData }) => (
   <Document>
