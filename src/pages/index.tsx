@@ -43,6 +43,7 @@ export default function PdfCreator() {
     averageOpenRate: "",
     averageClickRate: "",
     clickPerformance: [],
+    graphic: "",
   });
   const [rawClickPerformance, setRawClickPerformance] = useState<string>("");
 
@@ -58,6 +59,17 @@ export default function PdfCreator() {
     window.open(url, "_blank");
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, graphic: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleClickPerformance = (e: { target: { value: any } }) => {
     const input = e.target.value;
     setRawClickPerformance(input);
@@ -66,7 +78,7 @@ export default function PdfCreator() {
   return (
     <div className="bg-slate-50">
       <div className="flex flex-col max-w-xl mx-auto gap-6 p-6 bg-white">
-        <h2 className="text-xl mt-8">Basic Information</h2>
+        <h2 className="text-xl mt-8">Information</h2>
         <hr />
         <label
           htmlFor="business_name"
@@ -96,7 +108,7 @@ export default function PdfCreator() {
           <input
             type="text"
             id="campaignName"
-            placeholder="2023 April "
+            placeholder="January 2023 Newsletter"
             className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
             value={formData.campaignName}
             onChange={(e) =>
@@ -158,7 +170,12 @@ export default function PdfCreator() {
             }
           />
         </label>
-        <h2 className="text-xl mt-8">Email Information</h2>
+        <div className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+          <span className="text-xs font-medium text-gray-700">
+            Reporting Needs
+          </span>
+        </div>
+        <h2 className="text-xl mt-8">Performance</h2>
         <hr />
         <label
           htmlFor="sent"
@@ -166,9 +183,9 @@ export default function PdfCreator() {
         >
           <span className="text-xs font-medium text-gray-700">Sent</span>
           <input
-            type="text"
+            type="number"
             id="sent"
-            placeholder="Ex. 7,601"
+            placeholder="Ex. 9731"
             className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
             value={formData.sent}
             onChange={(e) => setFormData({ ...formData, sent: e.target.value })}
@@ -181,9 +198,9 @@ export default function PdfCreator() {
           >
             <span className="text-xs font-medium text-gray-700">Opens</span>
             <input
-              type="text"
+              type="number"
               id="opens"
-              placeholder="Ex. 4,397"
+              placeholder="Ex. 3190"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.opens}
               onChange={(e) =>
@@ -197,9 +214,9 @@ export default function PdfCreator() {
           >
             <span className="text-xs font-medium text-gray-700">Clicks</span>
             <input
-              type="text"
+              type="number"
               id="clicks"
-              placeholder="Ex. 873"
+              placeholder="Ex. 1203"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.clicks}
               onChange={(e) =>
@@ -215,9 +232,12 @@ export default function PdfCreator() {
           >
             <span className="text-xs font-medium text-gray-700">Open Rate</span>
             <input
-              type="text"
+              type="number"
+              step={0.1}
+              min={0}
+              max={100}
               id="openRate"
-              placeholder="Ex. 18.7"
+              placeholder="Ex. 32.8"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.openRate}
               onChange={(e) =>
@@ -233,9 +253,12 @@ export default function PdfCreator() {
               Click Rate
             </span>
             <input
-              type="text"
+              type="number"
+              step={0.1}
+              min={0}
+              max={100}
               id="clickRate"
-              placeholder="Ex. 3.1"
+              placeholder="Ex. 12.4"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.clickRate}
               onChange={(e) =>
@@ -253,9 +276,12 @@ export default function PdfCreator() {
               Open Rate - Industry Average
             </span>
             <input
-              type="text"
+              type="number"
+              step={0.1}
+              min={0}
+              max={100}
               id="averageOpenRate"
-              placeholder="Ex. 18.7"
+              placeholder="Ex. 23.7"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.averageOpenRate}
               onChange={(e) =>
@@ -271,9 +297,12 @@ export default function PdfCreator() {
               Click Rate - Industry Average
             </span>
             <input
-              type="text"
+              type="number"
+              step={0.1}
+              min={0}
+              max={100}
               id="averageClickRate"
-              placeholder="Ex. 3.1"
+              placeholder="Ex. 5.1"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.averageClickRate}
               onChange={(e) =>
@@ -291,10 +320,24 @@ export default function PdfCreator() {
           </span>
           <textarea
             id="clickPerformance"
+            rows={8}
             placeholder=""
             className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
             value={rawClickPerformance}
             onChange={handleClickPerformance}
+          />
+        </label>
+        <label
+          htmlFor="graphic"
+          className="block overflow-hidden rounded-md border border-gray-200 px-3 py-2 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+        >
+          <span className="text-xs font-medium text-gray-700">Email</span>
+          <input
+            id="graphic"
+            type="file"
+            placeholder=""
+            className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
+            onChange={handleFileChange}
           />
         </label>
         <h2 className="text-xl mt-8">Email Information</h2>
@@ -308,9 +351,11 @@ export default function PdfCreator() {
               Desktop Open Rate
             </span>
             <input
-              type="text"
+              type="number"
+              min={0}
+              max={100}
               id="openPctDesktop"
-              placeholder="Ex. 18.7"
+              placeholder="Ex. 91"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.openPctDesktop}
               onChange={(e) =>
@@ -326,9 +371,11 @@ export default function PdfCreator() {
               Mobile Open Rate
             </span>
             <input
-              type="text"
+              type="number"
+              min={0}
+              max={100}
               id="openPctMobile"
-              placeholder="Ex. 3.1"
+              placeholder="Ex. 9"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.openPctMobile}
               onChange={(e) =>
@@ -346,9 +393,11 @@ export default function PdfCreator() {
               Desktop Click Rate
             </span>
             <input
-              type="text"
+              type="number"
+              min={0}
+              max={100}
               id="clickPctDesktop"
-              placeholder="Ex. 18.7"
+              placeholder="Ex. 56"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.clickPctDesktop}
               onChange={(e) =>
@@ -364,9 +413,11 @@ export default function PdfCreator() {
               Mobile Click Rate
             </span>
             <input
-              type="text"
+              type="number"
+              min={0}
+              max={100}
               id="clickPctMobile"
-              placeholder="Ex. 3.1"
+              placeholder="Ex. 44"
               className="mt-1 w-full border-none p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               value={formData.clickPctMobile}
               onChange={(e) =>
