@@ -16,6 +16,10 @@ export type FormData = {
   averageOpenRate: string;
   averageClickRate: string;
   clickPerformance: ClickData[];
+  emailOpens: string[];
+  emailClicks: string[];
+  emailUnsubscribes: string[];
+  emailBounces: string[];
   graphic: string;
 };
 

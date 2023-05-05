@@ -8,7 +8,6 @@ export default function ClickPerformanceTable({ data }: { data: FormData }) {
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        paddingBottom: 32,
       }}
     >
       <View

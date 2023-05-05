@@ -37,3 +37,8 @@ export const convertToJSON = (inputString: string): ClickData[] => {
   });
   return result;
 };
+
+export const convertEmailToJSON = (emailString: string): string[] => {
+  const emailArray = emailString.split("\n");
+  return emailArray;
+};

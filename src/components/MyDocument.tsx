@@ -14,14 +14,14 @@ export const MyDocument = ({ data }: { data: FormData }) => (
       size={"A4"}
       style={{
         paddingHorizontal: 24,
-        paddingTop: 24,
-        paddingBottom: 12,
+        paddingTop: 112,
+        paddingBottom: 48,
         fontSize: 12,
         fontFamily: "AvenirNext",
       }}
     >
       <Header data={data} />
-      <View style={{ paddingTop: 100 }}>
+      <View>
         <Text
           style={{
             color: "#A3A3A2",
@@ -255,8 +255,9 @@ export const MyDocument = ({ data }: { data: FormData }) => (
           </View>
         </View>
       </View>
+
       {data.clickPerformance.length > 10 ? (
-        <View break style={{ paddingTop: 90 }}>
+        <View break>
           <ClickPerformanceTable data={data} />
         </View>
       ) : (
@@ -271,11 +272,102 @@ export const MyDocument = ({ data }: { data: FormData }) => (
               style={{
                 width: "auto",
                 height: "100%",
-                maxHeight: 760,
+                maxHeight: 672,
                 objectFit: "contain",
-                paddingTop: 90,
               }}
             />
+          </View>
+        </View>
+      )}
+
+      {data.emailOpens.length >= 1 && (
+        <View break>
+          <View>
+            <Text>
+              <Text style={{ color: "#A3A3A2", fontSize: 12 }}>OPENS</Text>
+            </Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              {data.emailOpens.map((email, i) => (
+                <Text
+                  key={i}
+                  style={{
+                    fontSize: 8,
+                    textAlign: "left",
+                    width: "33.33%",
+                  }}
+                >
+                  {email}
+                </Text>
+              ))}
+            </View>
+          </View>
+        </View>
+      )}
+
+      {data.emailUnsubscribes.length >= 1 && (
+        <View style={{ paddingTop: 24 }}>
+          <View>
+            <Text>
+              <Text style={{ color: "#A3A3A2", fontSize: 12 }}>
+                Unsubscribes
+              </Text>
+            </Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              {data.emailUnsubscribes.map((email, i) => (
+                <Text
+                  key={i}
+                  style={{
+                    fontSize: 8,
+                    textAlign: "left",
+                    width: "33.33%",
+                  }}
+                >
+                  {email}
+                </Text>
+              ))}
+            </View>
+          </View>
+        </View>
+      )}
+
+      {data.emailBounces.length >= 1 && (
+        <View>
+          <View style={{ paddingTop: 24 }}>
+            <Text>
+              <Text style={{ color: "#A3A3A2", fontSize: 12 }}>Bounces</Text>
+            </Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              {data.emailBounces.map((email, i) => (
+                <Text
+                  key={i}
+                  style={{
+                    fontSize: 8,
+                    textAlign: "left",
+                    width: "33.33%",
+                  }}
+                >
+                  {email}
+                </Text>
+              ))}
+            </View>
           </View>
         </View>
       )}
