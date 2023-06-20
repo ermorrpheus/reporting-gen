@@ -46,10 +46,10 @@ export const convertMailchimpToJSON = ({
 }: {
   data: string;
 }): DataItem[] => {
-  const lines = data.trim().split(/\r?\n/);
+  const lines = data.trim().split('\n');
 
   return lines.map((line) => {
-    const [url, clicks, percentage] = line.split(/\s+/);
+    const [url, clicks, percentage] = line.split('\t');
     const truncatedUrl =
       url.length > 50 ? url.trim().substring(0, 50) + "..." : url.trim();
 
