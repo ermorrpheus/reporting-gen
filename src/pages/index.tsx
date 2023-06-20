@@ -3,8 +3,12 @@ import { Font, pdf, PDFViewer } from "@react-pdf/renderer";
 import { useState } from "react";
 
 import { MyDocument } from "../components/MyDocument";
-import { ClickData, FormData } from "@/lib/types";
-import { convertEmailToJSON, convertToJSON } from "@/lib/utils";
+import { ClickData, FormData, DataItem, EmailProvider } from "@/lib/types";
+import {
+  convertEmailToJSON,
+  convertCCToJSON,
+  convertMailchimpToJSON,
+} from "@/lib/utils";
 import Input from "@/components/Input";
 
 Font.register({
@@ -43,7 +47,7 @@ export default function PdfCreator() {
     clickPctMobile: "",
     averageOpenRate: "",
     averageClickRate: "",
-    clickPerformance: [],
+    clickPerformanceData: [],
     emailOpens: [],
     emailClicks: [],
     emailUnsubscribes: [],
@@ -57,10 +61,21 @@ export default function PdfCreator() {
   const [rawUnsubscribes, setRawUnsubscribes] = useState<string>("");
   const [rawBounces, setRawBounces] = useState<string>("");
 
+  const [opensChecked, setOpensChecked] = useState(false);
+  const [clicksChecked, setClicksChecked] = useState(false);
+  const [unsubscribesChecked, setUnsubscribesChecked] = useState(false);
+  const [bouncesChecked, setBouncesChecked] = useState(false);
+
+  const [selectedProvider, setSelectedProvider] = useState<EmailProvider>(null);
+
+  const clickPerformanceData = selectedProvider === 'constantContact'
+    ? convertCCToJSON(rawClickPerformance) as ClickData[]
+    : convertMailchimpToJSON({ data: rawClickPerformance }) as DataItem[];
+
   const handleClick = async () => {
     const mutatedFormData = {
       ...formData,
-      clickPerformance: convertToJSON(rawClickPerformance) as ClickData[],
+      clickPerformanceData: clickPerformanceData,
       emailOpens: convertEmailToJSON(rawOpens),
       emailClicks: convertEmailToJSON(rawClicks),
       emailUnsubscribes: convertEmailToJSON(rawUnsubscribes),
@@ -109,11 +124,6 @@ export default function PdfCreator() {
     setRawBounces(input);
   };
 
-  const [opensChecked, setOpensChecked] = useState(false);
-  const [clicksChecked, setClicksChecked] = useState(false);
-  const [unsubscribesChecked, setUnsubscribesChecked] = useState(false);
-  const [bouncesChecked, setBouncesChecked] = useState(false);
-
   const handleOpensChange = (e: {
     target: { checked: boolean | ((prevState: boolean) => boolean) };
   }) => {
@@ -136,6 +146,10 @@ export default function PdfCreator() {
     target: { checked: boolean | ((prevState: boolean) => boolean) };
   }) => {
     setBouncesChecked(e.target.checked);
+  };
+
+  const handleProviderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedProvider(e.target.id as EmailProvider);
   };
 
   return (
@@ -195,6 +209,8 @@ export default function PdfCreator() {
                 id="constantContact"
                 name="emailProvider"
                 type="radio"
+                checked={selectedProvider === 'constantContact'}
+                onChange={handleProviderChange}
                 className="rounded-full p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               />
               <span className="text-xs text-gray-700 ml-4">
@@ -206,19 +222,11 @@ export default function PdfCreator() {
                 id="mailchimp"
                 name="emailProvider"
                 type="radio"
+                checked={selectedProvider === 'mailchimp'}
+                onChange={handleProviderChange}
                 className="rounded-full p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
               />
               <span className="text-xs text-gray-700 ml-4">Mailchimp</span>
-            </label>
-
-            <label htmlFor="notApplicable">
-              <input
-                id="notApplicable"
-                name="emailProvider"
-                type="radio"
-                className="rounded-full p-0 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm"
-              />
-              <span className="text-xs text-gray-700 ml-4">Not Applicable</span>
             </label>
           </div>
         </div>

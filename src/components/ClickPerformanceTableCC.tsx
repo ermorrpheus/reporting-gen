@@ -1,7 +1,7 @@
 import { View, Text } from "@react-pdf/renderer";
 import { FormData } from "@/lib/types";
 
-export default function ClickPerformanceTable({ data }: { data: FormData }) {
+export default function ClickPerformanceTableCC({ data }: { data: FormData }) {
   return (
     <View
       style={{
@@ -50,17 +50,19 @@ export default function ClickPerformanceTable({ data }: { data: FormData }) {
             }}
           >
             <Text style={{ width: "70%" }}>URL</Text>
-            <Text style={{ width: "10%", textAlign: "right" }}>Clicks</Text>
+            <Text style={{ width: "10%", textAlign: "right" }}>
+              Unique Clicks
+            </Text>
             <Text style={{ width: "10%", textAlign: "right", paddingRight: 4 }}>
-              Rate
+              Distribution
             </Text>
           </View>
-          {Number.isNaN(data.clickPerformance[0].clicks) ? (
+          {Number.isNaN(data.clickPerformanceData[0].clicks) ? (
             <View style={{ paddingBottom: 8 }}>
               <Text style={{ textAlign: "center" }}>No Clicks Available</Text>
             </View>
           ) : (
-            data.clickPerformance.map((row, i) => (
+            data.clickPerformanceData.map((row, i) => (
               <View
                 key={i}
                 style={{

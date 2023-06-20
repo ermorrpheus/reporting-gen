@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import { FormData } from "@/lib/types";
-import OpenSVG from "@/components/OpenSVG";
-import CloseSVG from "@/components/CloseSVG";
+import DistributionSVG from "@/components/DistributionSVG";
+import DeviceSVG from "@/components/DeviceSVG";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ClickPerformanceTable from "@/components/ClickPerformanceTable";
+import ClickPerformanceTableCC from "@/components/ClickPerformanceTableCC";
 
 export const MyDocument = ({ data }: { data: FormData }) => (
   <Document>
@@ -210,7 +210,7 @@ export const MyDocument = ({ data }: { data: FormData }) => (
               borderWidth: 1,
               borderColor: "#EFEFEF",
               borderRadius: 5,
-              flex: 1,
+              flex: 2,
               display: "flex",
               flexDirection: "column",
               paddingTop: 12,
@@ -221,13 +221,13 @@ export const MyDocument = ({ data }: { data: FormData }) => (
             <Text
               style={{
                 fontSize: 10,
-                paddingBottom: 8,
+                paddingBottom: 4,
                 textAlign: "center",
               }}
             >
-              {parseInt(data.opens).toLocaleString()} Opens
+              Campaign Distribution
             </Text>
-            <OpenSVG data={data} />
+            <DistributionSVG data={data} />
           </View>
           <View
             style={{
@@ -245,23 +245,23 @@ export const MyDocument = ({ data }: { data: FormData }) => (
             <Text
               style={{
                 fontSize: 10,
-                paddingBottom: 8,
+                paddingBottom: 4,
                 textAlign: "center",
               }}
             >
-              {parseInt(data.clicks).toLocaleString()} Clicks
+              Device Distribution
             </Text>
-            <CloseSVG data={data} />
+            <DeviceSVG data={data} />
           </View>
         </View>
       </View>
 
-      {data.clickPerformance.length > 10 ? (
+      {data.clickPerformanceData.length > 10 ? (
         <View break>
-          <ClickPerformanceTable data={data} />
+          <ClickPerformanceTableCC data={data} />
         </View>
       ) : (
-        <ClickPerformanceTable data={data} />
+        <ClickPerformanceTableCC data={data} />
       )}
 
       {data.graphic && (
@@ -280,7 +280,7 @@ export const MyDocument = ({ data }: { data: FormData }) => (
         </View>
       )}
 
-      {data.emailOpens.length >= 1 && (
+      {data.emailOpens.length > 0 && data.emailOpens[0] !== "" && (
         <View break>
           <View>
             <Text>
@@ -310,43 +310,44 @@ export const MyDocument = ({ data }: { data: FormData }) => (
         </View>
       )}
 
-      {data.emailUnsubscribes.length >= 1 && (
-        <View style={{ paddingTop: 24 }}>
-          <View>
-            <Text>
-              <Text style={{ color: "#A3A3A2", fontSize: 12 }}>
-                Unsubscribes
-              </Text>
-            </Text>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}
-            >
-              {data.emailUnsubscribes.map((email, i) => (
-                <Text
-                  key={i}
-                  style={{
-                    fontSize: 8,
-                    textAlign: "left",
-                    width: "33.33%",
-                  }}
-                >
-                  {email}
+      {data.emailUnsubscribes.length > 0 &&
+        data.emailUnsubscribes[0] !== "" && (
+          <View style={{ paddingTop: 24 }}>
+            <View>
+              <Text>
+                <Text style={{ color: "#A3A3A2", fontSize: 12 }}>
+                  UNSUBSCRIBES
                 </Text>
-              ))}
+              </Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                }}
+              >
+                {data.emailUnsubscribes.map((email, i) => (
+                  <Text
+                    key={i}
+                    style={{
+                      fontSize: 8,
+                      textAlign: "left",
+                      width: "33.33%",
+                    }}
+                  >
+                    {email}
+                  </Text>
+                ))}
+              </View>
             </View>
           </View>
-        </View>
-      )}
+        )}
 
-      {data.emailBounces.length >= 1 && (
+      {data.emailBounces.length > 0 && data.emailBounces[0] !== "" && (
         <View>
           <View style={{ paddingTop: 24 }}>
             <Text>
-              <Text style={{ color: "#A3A3A2", fontSize: 12 }}>Bounces</Text>
+              <Text style={{ color: "#A3A3A2", fontSize: 12 }}>BOUNCES</Text>
             </Text>
             <View
               style={{
@@ -371,6 +372,7 @@ export const MyDocument = ({ data }: { data: FormData }) => (
           </View>
         </View>
       )}
+
       <Footer />
     </Page>
   </Document>

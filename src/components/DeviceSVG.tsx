@@ -1,9 +1,10 @@
 import { G, Line, Rect, Svg, Text } from "@react-pdf/renderer";
 import { FormData } from "@/lib/types";
 
-export default function OpenSVG({ data }: { data: FormData }) {
+export default function DeviceSVG({ data }: { data: FormData }) {
   return (
-    <Svg viewBox="0 0 210 130">
+    <Svg viewBox="0 -5 210 140">
+      {/* 100% Line */}
       <G>
         <Line
           x1="10"
@@ -17,6 +18,7 @@ export default function OpenSVG({ data }: { data: FormData }) {
           100
         </Text>
       </G>
+      {/* 75% Line */}
       <G>
         <Line
           x1="10"
@@ -30,6 +32,7 @@ export default function OpenSVG({ data }: { data: FormData }) {
           75
         </Text>
       </G>
+      {/* 50% Line */}
       <G>
         <Line
           x1="10"
@@ -39,10 +42,11 @@ export default function OpenSVG({ data }: { data: FormData }) {
           strokeWidth={1}
           stroke="#efefef"
         />
+        <Text x="2" y="62" style={{ fill: "#efefef", fontSize: 6 }}>
+          50
+        </Text>
       </G>
-      <Text x="2" y="62" style={{ fill: "#efefef", fontSize: 6 }}>
-        50
-      </Text>
+      {/* 25% Line */}
       <G>
         <Line
           x1="10"
@@ -56,6 +60,7 @@ export default function OpenSVG({ data }: { data: FormData }) {
           25
         </Text>
       </G>
+      {/* 0% Line */}
       <G>
         <Line
           x1="10"
@@ -71,39 +76,43 @@ export default function OpenSVG({ data }: { data: FormData }) {
       </G>
       <G>
         <Text
-          x={data.openPctDesktop.toString().length > 1 ? 63 : 66}
-          y={105 - parseInt(data.openPctDesktop)}
-          style={{ fontSize: 8, fontFamily: "AvenirNext" }}
-        >{`${parseInt(data.openPctDesktop).toFixed(0)}%`}</Text>
+          x={data.clickPctDesktop.toString().length > 1 ? 54 : 57}
+          y={105 - parseInt(data.clickPctDesktop)}
+          style={{ fontSize: 10, fontFamily: "AvenirNext" }}
+        >{`${parseInt(data.clickPctDesktop).toFixed(0)}%`}</Text>
         <Text
-          x={data.openPctMobile.toString().length > 1 ? 142 : 145}
-          y={105 - parseInt(data.openPctMobile)}
-          style={{ fontSize: 8, fontFamily: "AvenirNext" }}
-        >{`${parseInt(data.openPctMobile).toFixed(0)}%`}</Text>
+          x={data.clickPctMobile.toString().length > 1 ? 137 : 140}
+          y={105 - parseInt(data.clickPctMobile)}
+          style={{ fontSize: 10, fontFamily: "AvenirNext" }}
+        >{`${parseInt(data.clickPctMobile).toFixed(0)}%`}</Text>
       </G>
       <G>
         <Rect
           width="40"
-          height={parseInt(data.openPctDesktop)}
-          y={110 - parseInt(data.openPctDesktop)}
-          x="50"
+          height={parseInt(data.clickPctDesktop)}
+          y={110 - parseInt(data.clickPctDesktop)}
+          x="43.33"
           fill="#7CB3CA"
         />
       </G>
       <G>
         <Rect
           width="40"
-          height={parseInt(data.openPctMobile)}
-          y={110 - parseInt(data.openPctMobile)}
-          x="130"
+          height={parseInt(data.clickPctMobile)}
+          y={110 - parseInt(data.clickPctMobile)}
+          x="126.67"
           fill="#7CB3CA"
         />
       </G>
       <G>
-        <Text x="55" y="125" style={{ fontSize: 8, fontFamily: "AvenirNext" }}>
+        <Text x="42" y="125" style={{ fontSize: 11, fontFamily: "AvenirNext" }}>
           Desktop
         </Text>
-        <Text x="138" y="125" style={{ fontSize: 8, fontFamily: "AvenirNext" }}>
+        <Text
+          x="129.5"
+          y="125"
+          style={{ fontSize: 11, fontFamily: "AvenirNext" }}
+        >
           Mobile
         </Text>
       </G>

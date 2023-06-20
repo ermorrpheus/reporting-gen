@@ -15,7 +15,7 @@ export type FormData = {
   clickPctMobile: string;
   averageOpenRate: string;
   averageClickRate: string;
-  clickPerformance: ClickData[];
+  clickPerformanceData: ClickData[] | DataItem[];
   emailOpens: string[];
   emailClicks: string[];
   emailUnsubscribes: string[];
@@ -28,3 +28,11 @@ export type ClickData = {
   clicks: number;
   percentage: string;
 };
+
+export interface DataItem {
+  url: string;
+  clicks: string;
+  percentage: string;
+}
+
+export type EmailProvider = 'constantContact' | 'mailchimp' | null;
