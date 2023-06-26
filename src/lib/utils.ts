@@ -31,7 +31,7 @@ export const convertCCToJSON = (inputString: string): ClickData[] => {
   const result = lines.map((line) => {
     const [url, clicks, percentage] = line.trim().split(/\s+/);
     const truncatedUrl =
-      url.length > 50 ? url.trim().substring(0, 50) + "..." : url.trim();
+      url.length > 60 ? url.trim().substring(0, 60) + "..." : url.trim();
     return {
       url: truncatedUrl,
       clicks: parseInt(clicks),
@@ -41,24 +41,21 @@ export const convertCCToJSON = (inputString: string): ClickData[] => {
   return result;
 };
 
-export const convertMailchimpToJSON = ({
-  data,
-}: {
-  data: string;
-}): DataItem[] => {
-  const lines = data.trim().split('\n');
-
-  return lines.map((line) => {
-    const [url, clicks, percentage] = line.split('\t');
+export const convertMailchimpToJSON = (inputString: string): DataItem[] => {
+  const cleanInputString = inputString.replace(/\([^)]*\)|((?:http|www)\S*)\n+/g, (match, p1) => p1 ? p1 : '');
+  const lines = cleanInputString.trim().split(/\r?\n/);
+  
+  const result = lines.map((line) => {
+    const [url, clicks, percentage] = line.trim().split(/\s+/);
     const truncatedUrl =
-      url.length > 50 ? url.trim().substring(0, 50) + "..." : url.trim();
-
+      url.length > 60 ? url.trim().substring(0, 60) + "..." : url.trim();
     return {
       url: truncatedUrl,
-      clicks: clicks,
-      percentage: percentage,
-    } as DataItem;
+      clicks,
+      percentage,
+    };
   });
+  return result;
 };
 
 export const convertEmailToJSON = (emailString: string): string[] => {

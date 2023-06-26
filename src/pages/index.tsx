@@ -53,24 +53,26 @@ export default function PdfCreator() {
     emailUnsubscribes: [],
     emailBounces: [],
     graphic: "",
+    selectedProvider: "",
   });
 
+  
   const [rawClickPerformance, setRawClickPerformance] = useState<string>("");
   const [rawOpens, setRawOpens] = useState<string>("");
   const [rawClicks, setRawClicks] = useState<string>("");
   const [rawUnsubscribes, setRawUnsubscribes] = useState<string>("");
   const [rawBounces, setRawBounces] = useState<string>("");
-
+  
   const [opensChecked, setOpensChecked] = useState(false);
   const [clicksChecked, setClicksChecked] = useState(false);
   const [unsubscribesChecked, setUnsubscribesChecked] = useState(false);
   const [bouncesChecked, setBouncesChecked] = useState(false);
-
+  
   const [selectedProvider, setSelectedProvider] = useState<EmailProvider>(null);
-
+  
   const clickPerformanceData = selectedProvider === 'constantContact'
     ? convertCCToJSON(rawClickPerformance) as ClickData[]
-    : convertMailchimpToJSON({ data: rawClickPerformance }) as DataItem[];
+    : convertMailchimpToJSON(rawClickPerformance) as DataItem[];
 
   const handleClick = async () => {
     const mutatedFormData = {
@@ -80,6 +82,7 @@ export default function PdfCreator() {
       emailClicks: convertEmailToJSON(rawClicks),
       emailUnsubscribes: convertEmailToJSON(rawUnsubscribes),
       emailBounces: convertEmailToJSON(rawBounces),
+      selectedProvider: selectedProvider,
     };
     const newPDF = await pdf(<MyDocument data={mutatedFormData} />);
     const blob = await newPDF.toBlob();

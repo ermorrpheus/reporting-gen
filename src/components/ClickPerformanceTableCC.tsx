@@ -49,12 +49,12 @@ export default function ClickPerformanceTableCC({ data }: { data: FormData }) {
               color: "darkgray",
             }}
           >
-            <Text style={{ width: "70%" }}>URL</Text>
-            <Text style={{ width: "10%", textAlign: "right" }}>
-              Unique Clicks
+            <Text style={{ width: "65%" }}>URL</Text>
+            <Text style={{ width: "15%", textAlign: "right" }}>
+              {data.selectedProvider === 'constantContact' ? 'Unique Clicks' : 'Total Clicks'}
             </Text>
-            <Text style={{ width: "10%", textAlign: "right", paddingRight: 4 }}>
-              Distribution
+            <Text style={{ width: "15%", textAlign: "right", paddingRight: 4 }}>
+            {data.selectedProvider === 'constantContact' ? 'Distribution' : 'Unique Clicks'}
             </Text>
           </View>
           {Number.isNaN(data.clickPerformanceData[0].clicks) ? (
@@ -75,13 +75,13 @@ export default function ClickPerformanceTableCC({ data }: { data: FormData }) {
                   fontSize: 10,
                 }}
               >
-                <Text style={{ width: "70%" }}>{row.url}</Text>
-                <Text style={{ width: "10%", textAlign: "right" }}>
+                <Text style={{ width: "65%" }}>{row.url}</Text>
+                <Text style={{ width: "15%", textAlign: "right" }}>
                   {row.clicks}
                 </Text>
                 <Text
                   style={{
-                    width: "10%",
+                    width: "15%",
                     textAlign: "right",
                     paddingRight: 4,
                   }}

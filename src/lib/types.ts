@@ -21,6 +21,7 @@ export type FormData = {
   emailUnsubscribes: string[];
   emailBounces: string[];
   graphic: string;
+  selectedProvider: string | null;
 };
 
 export type ClickData = {
